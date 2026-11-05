@@ -1,6 +1,10 @@
+import type { InputHTMLAttributes } from 'react'
 import './Checkbox.css'
 
-type CheckboxProps = {
+type CheckboxProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'checked' | 'onChange' | 'type'
+> & {
   checked: boolean
   onChange: (checked: boolean) => void
   'aria-label': string

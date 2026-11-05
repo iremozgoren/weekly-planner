@@ -1,0 +1,37 @@
+.settings-panel {
+  padding: 20px 24px;
+}
+
+.settings-panel__title {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+}
+
+.settings-panel__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.settings-panel__row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-panel__row-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.settings-panel__row-description {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.settings-panel__row .checkbox {
+  margin-top: 3px;
+}

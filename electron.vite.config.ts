@@ -43,6 +43,7 @@ export default defineConfig({
         input: {
           index: resolve('src/renderer/index.html'),
           widget: resolve('src/renderer/widget.html'),
+          settings: resolve('src/renderer/settings.html'),
         },
       },
     },

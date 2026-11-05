@@ -15,6 +15,12 @@ export const IpcChannels = {
   settingsUpdate: 'settings:update',
   /** Broadcast from main to every window whenever settings change. */
   settingsChanged: 'settings:changed',
+
+  /** Always reads the real OS value (app.getLoginItemSettings()) — never trust the cached setting. */
+  launchAtLoginGet: 'launch-at-login:get',
+  launchAtLoginSet: 'launch-at-login:set',
+
+  settingsWindowOpen: 'settings-window:open',
 } as const
 
 export type IpcChannelName = (typeof IpcChannels)[keyof typeof IpcChannels]

@@ -43,6 +43,10 @@ const en = {
   'tray.hideWidget': 'Hide Widget',
   'tray.openMainWindow': 'Open Main Window',
   'tray.quit': 'Quit',
+
+  'settings.title': 'Settings',
+  'settings.launchAtLogin': 'Launch at login',
+  'settings.launchAtLoginDescription': 'Automatically start Weekly Planner when you log in.',
 }
 
 export type Translations = typeof en

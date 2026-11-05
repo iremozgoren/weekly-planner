@@ -41,7 +41,12 @@ const api = {
       ipcRenderer.on(IpcChannels.settingsChanged, listener)
       return () => ipcRenderer.removeListener(IpcChannels.settingsChanged, listener)
     },
+    /** Always the real OS value — see CLAUDE.md § Platform specifics. */
+    getLaunchAtLogin: (): Promise<boolean> => ipcRenderer.invoke(IpcChannels.launchAtLoginGet),
+    setLaunchAtLogin: (enabled: boolean): Promise<boolean> =>
+      ipcRenderer.invoke(IpcChannels.launchAtLoginSet, enabled),
   },
+  openSettingsWindow: (): Promise<void> => ipcRenderer.invoke(IpcChannels.settingsWindowOpen),
 }
 
 // contextIsolation is always on for every window in this app (see CLAUDE.md) —
