@@ -1,10 +1,10 @@
 {
   "name": "weekly-planner",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A cross-platform weekly planner desktop app with a syncable widget window.",
   "main": "./out/main/index.js",
-  "author": "İrem",
-  "license": "UNLICENSED",
+  "author": "İrem Özgören",
+  "license": "MIT",
   "private": true,
   "type": "module",
   "scripts": {
