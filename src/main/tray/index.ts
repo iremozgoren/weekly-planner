@@ -1,5 +1,6 @@
 import { join } from 'node:path'
 import { app, Menu, nativeImage, Tray } from 'electron'
+import { is } from '@electron-toolkit/utils'
 import { t } from '../i18n'
 import { setQuitting } from '../appState'
 import { createMainWindow, getMainWindow } from '../windows/mainWindow'
@@ -11,9 +12,12 @@ let tray: Tray | null = null
 function getTrayIconPath(): string {
   const fileName = process.platform === 'win32' ? 'tray.ico' : 'trayTemplate.png'
   // In dev, __dirname is out/main; resources/ sits at the project root.
-  // TODO(packaging step): revisit once electron-builder packages the app —
-  // this may need process.resourcesPath instead.
-  return join(__dirname, '../../resources', fileName)
+  // In a packaged app, electron-builder's extraResources copies resources/
+  // into process.resourcesPath/resources instead (see electron-builder.yml).
+  if (is.dev) {
+    return join(__dirname, '../../resources', fileName)
+  }
+  return join(process.resourcesPath, 'resources', fileName)
 }
 
 function openMainWindow(): void {

@@ -1,0 +1,41 @@
+appId: com.weeklyplanner.app
+productName: Weekly Planner
+copyright: Copyright © 2026 İrem
+
+directories:
+  output: dist
+  buildResources: build
+
+# No `files` override — electron-builder's own defaults already do the
+# right thing here: include everything needed to run `out/main/index.js`
+# (per package.json's "main"), prune devDependencies out of node_modules,
+# and exclude the repo's source/config noise. Overriding it risks silently
+# excluding a real dependency.
+extraResources:
+  - from: resources
+    to: resources
+
+mac:
+  icon: build/icon.icns
+  category: public.app-category.productivity
+  target:
+    - target: dmg
+      arch:
+        - arm64
+        - x64
+
+dmg:
+  title: '${productName} ${version}'
+
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch:
+        - x64
+
+nsis:
+  # Per-user install — no admin/UAC prompt (see CLAUDE.md § Platform specifics).
+  perMachine: false
+  oneClick: false
+  allowToChangeInstallationDirectory: true
