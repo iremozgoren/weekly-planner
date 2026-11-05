@@ -1,4 +1,4 @@
-import en, { type TranslationKey, type Translations } from './locales/en'
+import en, { type TranslationKey, type Translations } from '@shared/locales/en'
 
 export type { TranslationKey }
 

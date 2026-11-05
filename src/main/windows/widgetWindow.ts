@@ -3,6 +3,7 @@ import { BrowserWindow, screen } from 'electron'
 import { is } from '@electron-toolkit/utils'
 import { getSettings, updateSettings } from '../store/settingsStore'
 import { broadcastSettingsChanged } from '../ipc/broadcast'
+import { isQuitting } from '../appState'
 import { cornerPosition, nearestCorner, type Rect } from './widgetPosition'
 
 const WIDGET_SIZE = { width: 280, height: 340 }
@@ -64,7 +65,18 @@ export function createWidgetWindow(): BrowserWindow {
     widgetWindow.setAlwaysOnTop(true, 'floating')
   }
 
-  widgetWindow.on('ready-to-show', () => widgetWindow?.show())
+  widgetWindow.on('ready-to-show', () => {
+    if (getSettings().widget.visible) widgetWindow?.show()
+  })
+
+  // Same rationale as the main window: hide, don't destroy, unless this is
+  // an actual app quit.
+  widgetWindow.on('close', (event) => {
+    if (isQuitting()) return
+    event.preventDefault()
+    widgetWindow?.hide()
+  })
+
   widgetWindow.on('closed', () => {
     widgetWindow = null
     if (moveSettleTimer) clearTimeout(moveSettleTimer)
@@ -106,4 +118,25 @@ export function createWidgetWindow(): BrowserWindow {
 
 export function getWidgetWindow(): BrowserWindow | null {
   return widgetWindow
+}
+
+/** Shows or hides the widget and persists the choice, so it reopens in the same state. */
+export function setWidgetVisible(visible: boolean): void {
+  if (!widgetWindow) return
+  if (visible) {
+    widgetWindow.show()
+  } else {
+    widgetWindow.hide()
+  }
+
+  const current = getSettings()
+  if (current.widget.visible !== visible) {
+    updateSettings({ widget: { ...current.widget, visible } })
+    broadcastSettingsChanged()
+  }
+}
+
+export function toggleWidgetWindow(): void {
+  if (!widgetWindow) return
+  setWidgetVisible(!widgetWindow.isVisible())
 }

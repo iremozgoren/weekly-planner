@@ -1,6 +1,7 @@
 import { join } from 'node:path'
 import { BrowserWindow, shell } from 'electron'
 import { is } from '@electron-toolkit/utils'
+import { isQuitting } from '../appState'
 
 let mainWindow: BrowserWindow | null = null
 
@@ -28,6 +29,14 @@ export function createMainWindow(): BrowserWindow {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow?.show()
+  })
+
+  // Closing the window keeps the app alive in the tray — only an actual
+  // quit (tray "Quit", Cmd+Q, before-quit) should destroy it.
+  mainWindow.on('close', (event) => {
+    if (isQuitting()) return
+    event.preventDefault()
+    mainWindow?.hide()
   })
 
   mainWindow.on('closed', () => {

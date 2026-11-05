@@ -1,10 +1,12 @@
-import { app, BrowserWindow } from 'electron'
+import { app } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
-import { createMainWindow } from './windows/mainWindow'
+import { createMainWindow, getMainWindow } from './windows/mainWindow'
 import { createWidgetWindow } from './windows/widgetWindow'
+import { createTray } from './tray'
 import { initTasksStore, flushTasksStore } from './store/tasksStore'
 import { initSettingsStore, flushSettingsStore } from './store/settingsStore'
 import { registerIpcHandlers } from './ipc/registerHandlers'
+import { isQuitting, setQuitting } from './appState'
 
 // Only one instance of the app may run at a time; a second launch focuses the first.
 const gotLock = app.requestSingleInstanceLock()
@@ -12,11 +14,13 @@ if (!gotLock) {
   app.quit()
 } else {
   app.on('second-instance', () => {
-    const win = BrowserWindow.getAllWindows()[0]
+    const win = getMainWindow()
     if (win) {
       if (win.isMinimized()) win.restore()
       win.show()
       win.focus()
+    } else {
+      createMainWindow()
     }
   })
 
@@ -32,29 +36,28 @@ if (!gotLock) {
     registerIpcHandlers()
 
     createMainWindow()
-    // TODO(tray step): respect settings.widget.visible and let the tray
-    // toggle it; for now it's always shown so it can be built and tested.
     createWidgetWindow()
+    createTray()
 
+    // Both windows hide rather than close (see CLAUDE.md — the app stays
+    // alive in the tray), so there is no "window-all-closed quits" handler
+    // here: quitting only ever happens explicitly (tray "Quit", Cmd+Q).
     app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0) {
+      const win = getMainWindow()
+      if (win) {
+        win.show()
+        win.focus()
+      } else {
         createMainWindow()
       }
     })
   })
 
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit()
-    }
-  })
-
   // Debounced writes may still be pending when the user quits; flush them
   // before the process actually exits instead of risking a lost write.
-  let isQuitting = false
   app.on('before-quit', (event) => {
-    if (isQuitting) return
-    isQuitting = true
+    if (isQuitting()) return
+    setQuitting(true)
     event.preventDefault()
     void Promise.all([flushTasksStore(), flushSettingsStore()]).finally(() => {
       app.quit()
