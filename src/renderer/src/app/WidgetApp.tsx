@@ -60,14 +60,24 @@ export function WidgetApp() {
 
   if (widgetSettings.collapsed) {
     return (
-      <button
-        type="button"
-        className="widget-app widget-app--collapsed"
-        onClick={() => setCollapsed(false)}
-        aria-label={t('widget.expand')}
-      >
-        {t('widget.title')}
-      </button>
+      <div className="widget-app widget-app--collapsed">
+        {/* The only drag region on the pill — Electron's -webkit-app-region:
+            drag swallows clicks at the native OS level, even a plain click
+            with no movement, so the clickable label below must opt out of
+            it rather than share it (see CLAUDE.md § Theming and styling). */}
+        <span className="widget-app__grip" aria-hidden="true">
+          ⋮⋮
+        </span>
+        <button
+          type="button"
+          className="widget-app__collapsed-label"
+          onClick={() => setCollapsed(false)}
+          onDoubleClick={() => setCollapsed(false)}
+          aria-label={t('widget.expand')}
+        >
+          {t('widget.title')}
+        </button>
+      </div>
     )
   }
 

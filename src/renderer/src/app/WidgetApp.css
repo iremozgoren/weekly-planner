@@ -48,16 +48,43 @@
   padding: var(--space-3) var(--space-4);
 }
 
-/* Collapsed: the whole window shrinks to this pill (see widgetWindow.ts) —
-   it IS the drag handle and the click target to expand again. */
+/* Collapsed: the whole window shrinks to this pill (see widgetWindow.ts).
+   Only the grip is a drag region — a drag region swallows clicks at the
+   native OS level (even a plain click with no movement), so the label
+   that expands the widget again must be a separate, explicitly no-drag
+   element, not share the drag region the way the earlier (broken) version
+   did. */
 .widget-app--collapsed {
+  flex-direction: row;
+  align-items: stretch;
+  border: 1px solid var(--color-glass-border);
+}
+
+.widget-app__grip {
+  flex: 0 0 auto;
+  display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-glass-border);
+  width: 22px;
+  color: var(--color-text-muted);
+  font-size: 11px;
+  letter-spacing: -1px;
+  cursor: grab;
+  -webkit-app-region: drag;
+}
+
+.widget-app__collapsed-label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 0;
   font-family: var(--font-heading);
   font-weight: 560;
   font-size: var(--text-base);
   color: var(--color-text);
   cursor: pointer;
-  -webkit-app-region: drag;
+  -webkit-app-region: no-drag;
 }

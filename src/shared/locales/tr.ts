@@ -43,6 +43,8 @@ const tr: Translations = {
 
   'tray.showWidget': "Widget'ı Göster",
   'tray.hideWidget': "Widget'ı Gizle",
+  'tray.expandWidget': "Widget'ı Genişlet",
+  'tray.collapseWidget': "Widget'ı Daralt",
   'tray.openMainWindow': 'Ana Pencereyi Aç',
   'tray.quit': 'Çıkış',
 

@@ -158,6 +158,25 @@ export function toggleWidgetWindow(): void {
 }
 
 /**
+ * Collapses/expands the widget and persists the choice. A tray-menu
+ * fallback for the pill's own click-to-expand, in case that's ever
+ * unreachable for some reason — see CLAUDE.md's note on frameless windows
+ * and -webkit-app-region: drag swallowing clicks.
+ */
+export function setWidgetCollapsed(collapsed: boolean): void {
+  const current = getSettings()
+  if (current.widget.collapsed !== collapsed) {
+    updateSettings({ widget: { ...current.widget, collapsed } })
+    broadcastSettingsChanged()
+  }
+  applyWidgetCollapsedState()
+}
+
+export function toggleWidgetCollapsed(): void {
+  setWidgetCollapsed(!getSettings().widget.collapsed)
+}
+
+/**
  * Resizes the window to match the current collapsed/expanded setting and
  * repositions it so the same corner stays anchored (shrinking/growing a
  * window changes which x/y keeps e.g. its *bottom-right* edge fixed). Safe

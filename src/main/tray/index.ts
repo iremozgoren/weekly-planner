@@ -3,7 +3,8 @@ import { app, Menu, nativeImage, Tray } from 'electron'
 import { t } from '../i18n'
 import { setQuitting } from '../appState'
 import { createMainWindow, getMainWindow } from '../windows/mainWindow'
-import { getWidgetWindow, toggleWidgetWindow } from '../windows/widgetWindow'
+import { getWidgetWindow, toggleWidgetCollapsed, toggleWidgetWindow } from '../windows/widgetWindow'
+import { getSettings } from '../store/settingsStore'
 
 let tray: Tray | null = null
 
@@ -27,12 +28,21 @@ function openMainWindow(): void {
 
 function buildMenu(): Menu {
   const widgetVisible = getWidgetWindow()?.isVisible() ?? false
+  const widgetCollapsed = getSettings().widget.collapsed
 
   return Menu.buildFromTemplate([
     {
       label: widgetVisible ? t('tray.hideWidget') : t('tray.showWidget'),
       click: () => {
         toggleWidgetWindow()
+        refreshTrayMenu()
+      },
+    },
+    {
+      // A fallback for the pill's own click-to-expand — see widgetWindow.ts.
+      label: widgetCollapsed ? t('tray.expandWidget') : t('tray.collapseWidget'),
+      click: () => {
+        toggleWidgetCollapsed()
         refreshTrayMenu()
       },
     },

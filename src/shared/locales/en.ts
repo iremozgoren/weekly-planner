@@ -54,6 +54,8 @@ const en = {
 
   'tray.showWidget': 'Show Widget',
   'tray.hideWidget': 'Hide Widget',
+  'tray.expandWidget': 'Expand Widget',
+  'tray.collapseWidget': 'Collapse Widget',
   'tray.openMainWindow': 'Open Main Window',
   'tray.quit': 'Quit',
 
