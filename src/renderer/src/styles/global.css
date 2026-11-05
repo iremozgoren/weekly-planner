@@ -1,5 +1,7 @@
 :root {
   --color-bg: #faf9f7;
+  --color-surface: #ffffff;
+  --color-border: #e5e1da;
   --color-text: #1f2328;
   --color-text-muted: #6b7280;
   --color-accent: #8fb6ff;
@@ -8,6 +10,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --color-bg: #1c1d21;
+    --color-surface: #25262b;
+    --color-border: #34363c;
     --color-text: #e8e9ec;
     --color-text-muted: #9aa0a8;
     --color-accent: #7aa2f7;
@@ -37,14 +41,19 @@ body {
 .app-shell {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100%;
-  text-align: center;
-  padding: 24px;
 }
 
-.app-shell__meta {
+.app-shell__header {
+  padding: 16px 20px 0;
+}
+
+.app-shell__header h1 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.app-shell__loading {
   color: var(--color-text-muted);
-  font-size: 0.85rem;
+  padding: 20px;
 }

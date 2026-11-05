@@ -1,0 +1,57 @@
+.day-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.day-column[data-today] {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.day-column__header {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.day-column[data-today] .day-column__header {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.day-column__weekday {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.day-column[data-today] .day-column__weekday {
+  color: var(--color-accent);
+}
+
+.day-column__date {
+  font-size: 0.95rem;
+}
+
+.day-column__tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  flex: 1;
+  min-height: 80px;
+}
+
+.day-column__empty {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  margin: 0;
+}

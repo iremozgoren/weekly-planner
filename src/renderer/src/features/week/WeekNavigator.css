@@ -1,0 +1,43 @@
+.week-navigator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+}
+
+.week-navigator__range {
+  font-size: 1.1rem;
+  font-weight: 600;
+  min-width: 220px;
+}
+
+.week-navigator__arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.week-navigator__arrow:hover {
+  background: var(--color-accent);
+  color: white;
+}
+
+.week-navigator__today {
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.week-navigator__today:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
