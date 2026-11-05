@@ -17,8 +17,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "npm run typecheck && electron-vite build",
-    "build:mac": "npm run build && electron-builder --mac",
-    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run build && electron-builder --mac --publish=never",
+    "build:win": "npm run build && electron-builder --win --publish=never",
     "preview": "electron-vite preview"
   },
   "dependencies": {

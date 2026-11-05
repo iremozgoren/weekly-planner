@@ -2,13 +2,6 @@ appId: com.weeklyplanner.app
 productName: Weekly Planner
 copyright: Copyright © 2026 İrem
 
-# electron-builder auto-detects a CI environment + a git tag and tries to
-# publish to GitHub Releases itself — which fails without a GH_TOKEN in the
-# build jobs, and would race with the dedicated `release` job in
-# .github/workflows/release.yml that publishes both installers together.
-# Building is this config's job; publishing is the workflow's.
-publish: never
-
 directories:
   output: dist
   buildResources: build
