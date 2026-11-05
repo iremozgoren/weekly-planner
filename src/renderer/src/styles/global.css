@@ -13,7 +13,8 @@ body {
 body {
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
 }
 
 #root {
@@ -29,16 +30,30 @@ body {
 .app-shell__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px 0;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
 }
 
-.app-shell__header h1 {
+.app-shell__title {
   margin: 0;
-  font-size: 1.3rem;
+  flex: 0 0 auto;
+  font-family: var(--font-heading);
+  font-weight: 560;
+  font-size: var(--text-lg);
+  letter-spacing: 0.01em;
+}
+
+/* The navigator sits centered in whatever space is left between the title
+   and the gear icon, rather than drifting off-center the way a plain
+   3-child space-between would with an asymmetric title/icon width. */
+.app-shell__header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
 }
 
 .app-shell__loading {
   color: var(--color-text-muted);
-  padding: 20px;
+  padding: var(--space-5);
 }

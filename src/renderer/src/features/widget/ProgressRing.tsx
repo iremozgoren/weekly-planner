@@ -6,8 +6,8 @@ type ProgressRingProps = {
   size?: number
 }
 
-export function ProgressRing({ done, total, size = 40 }: ProgressRingProps) {
-  const strokeWidth = 4
+export function ProgressRing({ done, total, size = 48 }: ProgressRingProps) {
+  const strokeWidth = 5
   const radius = size / 2 - strokeWidth
   const circumference = 2 * Math.PI * radius
   const fraction = total > 0 ? done / total : 0

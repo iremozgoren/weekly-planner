@@ -11,12 +11,11 @@ import {
   type DragStartEvent,
 } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
-import { getWeekDays, goToNextWeek, goToPreviousWeek, toDayKey, todayKey } from '@shared/date'
+import { toDayKey, todayKey } from '@shared/date'
 import type { Task } from '@shared/types'
 import { useTasksStore } from '../../store/tasksStore'
 import { TaskEditor } from '../tasks/TaskEditor'
 import { DayColumn } from './DayColumn'
-import { WeekNavigator } from './WeekNavigator'
 import { TaskCardPreview } from './TaskCardPreview'
 import { computeDropPlacement } from './dragPlacement'
 import './WeekGrid.css'
@@ -25,9 +24,12 @@ import './WeekGrid.css'
 // (Omit isn't distributive), so the two branches are spelled out directly.
 type EditorState = { mode: 'create'; dayKey: string } | { mode: 'edit'; task: Task } | null
 
-export function WeekGrid() {
+type WeekGridProps = {
+  weekDays: Date[]
+}
+
+export function WeekGrid({ weekDays }: WeekGridProps) {
   const tasks = useTasksStore((state) => state.tasks)
-  const [anchorDate, setAnchorDate] = useState(() => new Date())
   const [editorState, setEditorState] = useState<EditorState>(null)
   const [activeTaskId, setActiveTaskId] = useState<string | null>(null)
 
@@ -36,7 +38,6 @@ export function WeekGrid() {
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   )
 
-  const weekDays = useMemo(() => getWeekDays(anchorDate), [anchorDate])
   const today = todayKey()
 
   const tasksByDay = useMemo(() => {
@@ -85,6 +86,11 @@ export function WeekGrid() {
     })
   }
 
+  // Keying the columns by the week's first day replays the fade-in
+  // animation whenever the visible week changes (collapses to no motion
+  // under prefers-reduced-motion via --duration-base, see tokens.css).
+  const weekKey = toDayKey(weekDays[0])
+
   return (
     <DndContext
       sensors={sensors}
@@ -94,14 +100,7 @@ export function WeekGrid() {
       onDragCancel={() => setActiveTaskId(null)}
     >
       <div className="week-grid">
-        <WeekNavigator
-          weekStart={weekDays[0]}
-          weekEnd={weekDays[6]}
-          onPrevious={() => setAnchorDate((date) => goToPreviousWeek(date))}
-          onNext={() => setAnchorDate((date) => goToNextWeek(date))}
-          onToday={() => setAnchorDate(new Date())}
-        />
-        <div className="week-grid__columns">
+        <div className="week-grid__columns" key={weekKey}>
           {weekDays.map((date) => {
             const dayKey = toDayKey(date)
             return (

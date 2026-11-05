@@ -2,31 +2,36 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
+  /* Translucent, not opaque — the macOS vibrancy/Windows acrylic effect set
+     on the BrowserWindow blurs the desktop behind it; this is the frosted
+     "glass" layer on top of that blur. Falls back to looking like a
+     slightly-soft card if vibrancy isn't available on a given platform. */
+  background: var(--color-glass-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 18%);
+  box-shadow: var(--shadow-lg);
 }
 
 .widget-app__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-glass-border);
   /* The window is frameless, so this strip is the drag handle. */
   -webkit-app-region: drag;
   cursor: grab;
 }
 
 .widget-app__title {
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-family: var(--font-heading);
+  font-weight: 560;
+  font-size: var(--text-md);
 }
 
 .widget-app__body {
   flex: 1;
   overflow-y: auto;
-  padding: 12px 14px;
+  padding: var(--space-3) var(--space-4);
 }

@@ -42,6 +42,7 @@ export function createWidgetWindow(): BrowserWindow {
     y: Math.round(initialPosition.y),
     frame: false,
     transparent: true,
+    backgroundColor: '#00000000',
     resizable: false,
     movable: true,
     alwaysOnTop: true,
@@ -52,6 +53,14 @@ export function createWidgetWindow(): BrowserWindow {
     // macOS-only: an NSPanel-backed window that never takes app focus and
     // stays out of Mission Control / the window-switcher list.
     ...(process.platform === 'darwin' ? { type: 'panel' } : {}),
+    // Frosted glass: macOS vibrancy blurs the desktop behind the window;
+    // the card's own CSS background is a translucent overlay on top of
+    // that blur (see styles/widget-global.css). 'popover' auto-adapts to
+    // light/dark. Windows 11 22H2+ gets the acrylic equivalent — this is
+    // set defensively and has NOT been visually verified on a real Windows
+    // machine, same caveat as every other Windows-only feature so far.
+    ...(process.platform === 'darwin' ? { vibrancy: 'popover', visualEffectState: 'active' } : {}),
+    ...(process.platform === 'win32' ? { backgroundMaterial: 'acrylic' } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: true,

@@ -1,10 +1,14 @@
 .btn {
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   border: 1px solid transparent;
-  padding: 8px 16px;
-  font-size: 0.9rem;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
   font-weight: 500;
   cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    color var(--duration-fast) var(--ease-standard);
 }
 
 .btn:disabled {
@@ -14,7 +18,7 @@
 
 .btn--primary {
   background: var(--color-accent);
-  color: white;
+  color: var(--color-on-accent);
 }
 
 .btn--secondary {
@@ -35,5 +39,8 @@
 
 .btn--danger:hover:not(:disabled) {
   background: var(--color-danger);
-  color: white;
+  /* --color-on-accent's light/dark values happen to also satisfy AA
+     contrast against --color-danger (verified alongside the accent pairing)
+     — reused rather than defining an identical --color-on-danger token. */
+  color: var(--color-on-accent);
 }

@@ -33,7 +33,7 @@ function buildMenu(): Menu {
       label: widgetVisible ? t('tray.hideWidget') : t('tray.showWidget'),
       click: () => {
         toggleWidgetWindow()
-        tray?.setContextMenu(buildMenu())
+        refreshTrayMenu()
       },
     },
     { label: t('tray.openMainWindow'), click: openMainWindow },
@@ -57,8 +57,15 @@ export function createTray(): Tray {
   }
 
   tray = new Tray(icon)
-  tray.setToolTip(t('common.appName'))
-  tray.setContextMenu(buildMenu())
+  refreshTrayMenu()
 
   return tray
+}
+
+/** Rebuilds the menu and tooltip — call after anything that could change their
+ * labels (widget visibility toggled, or settings like locale changed). */
+export function refreshTrayMenu(): void {
+  if (!tray) return
+  tray.setToolTip(t('common.appName'))
+  tray.setContextMenu(buildMenu())
 }

@@ -1,4 +1,5 @@
 import type { LabelColor } from './labels'
+import type { Locale } from './locales'
 
 /** A single task, keyed by the ISO day it belongs to (see CLAUDE.md § Task model). */
 export type Task = {
@@ -49,7 +50,7 @@ export type WidgetSettings = {
 export type Settings = {
   version: number
   theme: ThemeMode
-  locale: string
+  locale: Locale
   launchAtLogin: boolean
   widget: WidgetSettings
 }

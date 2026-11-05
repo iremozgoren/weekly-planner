@@ -1,8 +1,8 @@
 /**
  * English translations — the source of truth. Every other locale must
  * provide exactly this set of keys (see CLAUDE.md § i18n): add a sibling
- * `locales/tr.ts` etc. of type `Translations` and register it in
- * `renderer/src/i18n/index.ts`, and a missing key becomes a type error
+ * `locales/xx.ts` of type `Translations` and register it in
+ * `shared/locales/index.ts`, and a missing key becomes a type error
  * instead of a blank label at runtime.
  *
  * Keys are flat and namespaced (`week.*`, `task.*`, ...), mirroring
@@ -24,7 +24,6 @@ const en = {
 
   'week.previousWeek': 'Previous week',
   'week.nextWeek': 'Next week',
-  'week.noTasks': 'No tasks',
   'week.addTask': 'Add task',
 
   'task.newTask': 'New task',
@@ -38,6 +37,7 @@ const en = {
   'task.markDone': 'Mark done',
 
   'widget.title': 'Today',
+  'widget.empty': 'Nothing planned for today.',
 
   'tray.showWidget': 'Show Widget',
   'tray.hideWidget': 'Hide Widget',
@@ -45,6 +45,7 @@ const en = {
   'tray.quit': 'Quit',
 
   'settings.title': 'Settings',
+  'settings.language': 'Language',
   'settings.launchAtLogin': 'Launch at login',
   'settings.launchAtLoginDescription': 'Automatically start Weekly Planner when you log in.',
 }

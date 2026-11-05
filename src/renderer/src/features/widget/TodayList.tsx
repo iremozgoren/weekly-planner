@@ -30,7 +30,7 @@ export function TodayList({ tasks }: { tasks: Task[] }) {
   const { t } = useTranslation()
 
   if (tasks.length === 0) {
-    return <p className="today-list__empty">{t('week.noTasks')}</p>
+    return <p className="today-list__empty">{t('widget.empty')}</p>
   }
 
   return (

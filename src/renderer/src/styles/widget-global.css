@@ -15,7 +15,8 @@ body {
 
 body {
   color: var(--color-text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
   user-select: none;
 }
 

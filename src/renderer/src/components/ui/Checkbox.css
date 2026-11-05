@@ -6,3 +6,22 @@
   accent-color: var(--color-accent);
   cursor: pointer;
 }
+
+/* A browser restarts an animation tied to a pseudo-class selector whenever
+   that selector starts matching — so this replays on every check, giving a
+   small satisfying "pop" without any JS. */
+.checkbox:checked {
+  animation: checkbox-pop var(--duration-base) var(--ease-standard);
+}
+
+@keyframes checkbox-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(var(--motion-scale-pop));
+  }
+  100% {
+    transform: scale(1);
+  }
+}

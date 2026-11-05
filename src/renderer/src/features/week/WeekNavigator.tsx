@@ -17,33 +17,31 @@ export function WeekNavigator({
   onNext,
   onToday,
 }: WeekNavigatorProps) {
-  const { t } = useTranslation()
+  const { t, dateLocale } = useTranslation()
   const sameMonth = weekStart.getMonth() === weekEnd.getMonth()
   const rangeLabel = sameMonth
-    ? `${format(weekStart, 'MMM d')} – ${format(weekEnd, 'd, yyyy')}`
-    : `${format(weekStart, 'MMM d')} – ${format(weekEnd, 'MMM d, yyyy')}`
+    ? `${format(weekStart, 'MMM d', { locale: dateLocale })} – ${format(weekEnd, 'd, yyyy', { locale: dateLocale })}`
+    : `${format(weekStart, 'MMM d', { locale: dateLocale })} – ${format(weekEnd, 'MMM d, yyyy', { locale: dateLocale })}`
 
   return (
     <div className="week-navigator">
-      <div className="week-navigator__nav">
-        <button
-          type="button"
-          className="week-navigator__arrow"
-          onClick={onPrevious}
-          aria-label={t('week.previousWeek')}
-        >
-          ‹
-        </button>
-        <span className="week-navigator__range">{rangeLabel}</span>
-        <button
-          type="button"
-          className="week-navigator__arrow"
-          onClick={onNext}
-          aria-label={t('week.nextWeek')}
-        >
-          ›
-        </button>
-      </div>
+      <button
+        type="button"
+        className="week-navigator__arrow"
+        onClick={onPrevious}
+        aria-label={t('week.previousWeek')}
+      >
+        ‹
+      </button>
+      <span className="week-navigator__range">{rangeLabel}</span>
+      <button
+        type="button"
+        className="week-navigator__arrow"
+        onClick={onNext}
+        aria-label={t('week.nextWeek')}
+      >
+        ›
+      </button>
       <button type="button" className="week-navigator__today" onClick={onToday}>
         {t('common.today')}
       </button>

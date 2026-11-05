@@ -1,14 +1,14 @@
 .task-editor {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--space-4);
 }
 
 .task-editor__field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 0.85rem;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
   color: var(--color-text-muted);
 }
 
@@ -19,9 +19,10 @@
   color: var(--color-text);
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-2);
   resize: vertical;
+  transition: border-color var(--duration-fast) var(--ease-standard);
 }
 
 .task-editor__field input:focus,
@@ -34,10 +35,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 4px;
+  margin-top: var(--space-1);
 }
 
 .task-editor__actions-right {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
 }

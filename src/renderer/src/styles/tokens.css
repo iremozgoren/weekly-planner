@@ -2,25 +2,108 @@
  * Design tokens, shared by the main window and the widget window — both
  * `global.css` and `widget-global.css` import this so every surface agrees
  * on the same palette (see CLAUDE.md § Theming and styling).
+ *
+ * Palette direction: warm paper, not a cold dashboard. One accent color
+ * drives interactive elements; "today" gets its own warm amber wash
+ * instead of reusing that accent, so highlighting and interaction aren't
+ * the same visual signal. Every text/background pairing below has been
+ * checked against WCAG AA (>=4.5:1 for normal text) — see the commit for
+ * the actual contrast-ratio numbers.
  */
+@import '@fontsource-variable/fraunces/wght.css';
+
 :root {
-  --color-bg: #faf9f7;
+  /* Color */
+  --color-bg: #fbf6ef;
   --color-surface: #ffffff;
-  --color-border: #e5e1da;
-  --color-text: #1f2328;
-  --color-text-muted: #6b7280;
-  --color-accent: #8fb6ff;
-  --color-danger: #e0668a;
+  --color-border: #ece3d3;
+  --color-text: #2b2621;
+  --color-text-muted: #726757;
+  --color-accent: #5c68c4;
+  --color-on-accent: #ffffff;
+  --color-today-bg: #fdeedb;
+  --color-today-text: #9a5a28;
+  --color-danger: #c33f5b;
+
+  /* Widget glass surface (macOS vibrancy / Windows acrylic sit behind these) */
+  --color-glass-surface: rgb(255 255 255 / 62%);
+  --color-glass-border: rgb(255 255 255 / 55%);
+
+  /* Type */
+  --font-heading: 'Fraunces Variable', ui-serif, Georgia, serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.3125rem;
+
+  /* Space (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* Shadow (paper lifted off a warm desk, not a cold UI panel) */
+  --shadow-sm: 0 1px 2px rgb(60 40 20 / 6%);
+  --shadow-md: 0 4px 14px rgb(60 40 20 / 10%);
+  --shadow-lg: 0 12px 32px rgb(60 40 20 / 16%);
+  --shadow-drag: 0 14px 28px rgb(60 40 20 / 22%);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --motion-scale-drag: 1.03;
+  --motion-rotate-drag: 1.5deg;
+  --motion-scale-pop: 1.15;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #1c1d21;
-    --color-surface: #25262b;
-    --color-border: #34363c;
-    --color-text: #e8e9ec;
-    --color-text-muted: #9aa0a8;
-    --color-accent: #7aa2f7;
-    --color-danger: #e68ba6;
+    --color-bg: #1e1b18;
+    --color-surface: #2a2521;
+    --color-border: #3c352d;
+    --color-text: #f1e9dd;
+    --color-text-muted: #a89c8c;
+    --color-accent: #9aa3f0;
+    --color-on-accent: #1e1b18;
+    --color-today-bg: #3a2e1c;
+    --color-today-text: #e3a368;
+    --color-danger: #e98da0;
+
+    --color-glass-surface: rgb(42 37 33 / 55%);
+    --color-glass-border: rgb(255 255 255 / 8%);
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 30%);
+    --shadow-md: 0 4px 14px rgb(0 0 0 / 35%);
+    --shadow-lg: 0 14px 32px rgb(0 0 0 / 45%);
+    --shadow-drag: 0 16px 30px rgb(0 0 0 / 50%);
+  }
+}
+
+/* Users who ask for reduced motion don't get the playful bits: no drag
+   rotate/scale, no week-change cross-fade, no checkbox pop. Durations
+   collapsing to 0 is the standard, accepted mitigation — components don't
+   need a parallel "no-animation" code path. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+    --motion-scale-drag: 1;
+    --motion-rotate-drag: 0deg;
+    --motion-scale-pop: 1;
   }
 }

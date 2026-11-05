@@ -4,7 +4,6 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { toDayKey } from '@shared/date'
 import type { Task } from '@shared/types'
 import { useTranslation } from '../../i18n/useTranslation'
-import { IconButton } from '../../components/ui/IconButton'
 import { TaskCard } from './TaskCard'
 import './DayColumn.css'
 
@@ -20,36 +19,49 @@ type DayColumnProps = {
 export const DAY_DROPPABLE_PREFIX = 'day:'
 
 export function DayColumn({ date, tasks, isToday, onAddTask, onEditTask }: DayColumnProps) {
-  const { t } = useTranslation()
+  const { t, dateLocale } = useTranslation()
   const dayKey = toDayKey(date)
   const sortedTasks = [...tasks].sort((a, b) => a.order - b.order)
   const { setNodeRef } = useDroppable({ id: `${DAY_DROPPABLE_PREFIX}${dayKey}` })
+  const isEmpty = sortedTasks.length === 0
 
   return (
     <div className="day-column" data-today={isToday || undefined} data-day-key={dayKey}>
       <div className="day-column__header">
-        <span className="day-column__weekday">{format(date, 'EEE')}</span>
-        <span className="day-column__date">{format(date, 'd')}</span>
+        <span className="day-column__weekday">{format(date, 'EEE', { locale: dateLocale })}</span>
+        <span className="day-column__date">{format(date, 'd', { locale: dateLocale })}</span>
       </div>
       <SortableContext
         items={sortedTasks.map((task) => task.id)}
         strategy={verticalListSortingStrategy}
       >
-        <div className="day-column__tasks" ref={setNodeRef}>
-          {sortedTasks.length === 0 ? (
-            <p className="day-column__empty">{t('week.noTasks')}</p>
+        <div className="day-column__tasks" data-empty={isEmpty || undefined} ref={setNodeRef}>
+          {isEmpty ? (
+            <button
+              type="button"
+              className="day-column__empty-add"
+              onClick={() => onAddTask(dayKey)}
+            >
+              <span className="day-column__empty-add-icon">+</span>
+              <span>{t('week.addTask')}</span>
+            </button>
           ) : (
-            sortedTasks.map((task) => (
-              <TaskCard key={task.id} task={task} onEdit={() => onEditTask(task)} />
-            ))
+            <>
+              {sortedTasks.map((task) => (
+                <TaskCard key={task.id} task={task} onEdit={() => onEditTask(task)} />
+              ))}
+              <button
+                type="button"
+                className="day-column__add-row"
+                onClick={() => onAddTask(dayKey)}
+              >
+                <span className="day-column__add-row-icon">+</span>
+                {t('week.addTask')}
+              </button>
+            </>
           )}
         </div>
       </SortableContext>
-      <div className="day-column__footer">
-        <IconButton aria-label={t('week.addTask')} onClick={() => onAddTask(dayKey)}>
-          +
-        </IconButton>
-      </div>
     </div>
   )
 }

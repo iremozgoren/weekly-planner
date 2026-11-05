@@ -6,6 +6,7 @@ import * as settingsStore from '../store/settingsStore'
 import { broadcastSettingsChanged, broadcastTasksChanged } from './broadcast'
 import { getLaunchAtLoginStatus, setLaunchAtLoginStatus } from '../services/launchAtLogin'
 import { createSettingsWindow } from '../windows/settingsWindow'
+import { refreshTrayMenu } from '../tray'
 
 /** Wires every IPC channel from shared/ipc-channels.ts to a store action. Call once at startup. */
 export function registerIpcHandlers(): void {
@@ -33,6 +34,7 @@ export function registerIpcHandlers(): void {
   ipcMain.handle(IpcChannels.settingsUpdate, (_event, patch: SettingsPatch) => {
     const settings = settingsStore.updateSettings(patch)
     broadcastSettingsChanged()
+    refreshTrayMenu() // labels may depend on locale/visibility, which just changed
     return settings
   })
 
