@@ -44,6 +44,8 @@ export type WidgetSettings = {
   visible: boolean
   corner: WidgetCorner
   offset: { x: number; y: number }
+  /** Collapsed to a small "Today" pill instead of showing the full task list. */
+  collapsed: boolean
 }
 
 /** The on-disk shape of settings.json. `version` drives the migration chain. */

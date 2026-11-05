@@ -27,6 +27,8 @@ const tr: Translations = {
 
   'widget.title': 'Bugün',
   'widget.empty': 'Bugün için planlanan bir şey yok.',
+  'widget.collapse': 'Daralt',
+  'widget.expand': "Widget'ı genişlet",
 
   'tray.showWidget': "Widget'ı Göster",
   'tray.hideWidget': "Widget'ı Gizle",

@@ -38,6 +38,8 @@ const en = {
 
   'widget.title': 'Today',
   'widget.empty': 'Nothing planned for today.',
+  'widget.collapse': 'Collapse',
+  'widget.expand': 'Expand widget',
 
   'tray.showWidget': 'Show Widget',
   'tray.hideWidget': 'Hide Widget',

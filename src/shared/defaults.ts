@@ -1,7 +1,7 @@
 import type { PlannerData, Settings } from './types'
 
 export const PLANNER_VERSION = 1
-export const SETTINGS_VERSION = 1
+export const SETTINGS_VERSION = 2
 
 export function createDefaultPlannerData(): PlannerData {
   return { version: PLANNER_VERSION, tasks: [] }
@@ -17,6 +17,7 @@ export function createDefaultSettings(): Settings {
       visible: false,
       corner: 'top-right',
       offset: { x: 16, y: 16 },
+      collapsed: false,
     },
   }
 }

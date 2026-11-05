@@ -24,6 +24,18 @@
   cursor: grab;
 }
 
+.widget-app__header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* The collapse button sits inside the drag-region header, so it needs to
+   opt back out or a click would be swallowed by the native window drag. */
+.widget-app__collapse-button {
+  -webkit-app-region: no-drag;
+}
+
 .widget-app__title {
   font-family: var(--font-heading);
   font-weight: 560;
@@ -34,4 +46,18 @@
   flex: 1;
   overflow-y: auto;
   padding: var(--space-3) var(--space-4);
+}
+
+/* Collapsed: the whole window shrinks to this pill (see widgetWindow.ts) —
+   it IS the drag handle and the click target to expand again. */
+.widget-app--collapsed {
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-glass-border);
+  font-family: var(--font-heading);
+  font-weight: 560;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  cursor: pointer;
+  -webkit-app-region: drag;
 }

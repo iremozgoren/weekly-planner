@@ -5,10 +5,15 @@ import { SETTINGS_VERSION } from '@shared/defaults'
  * One entry per released version, upgrading FROM that version TO the next.
  * Never edit a case once it has shipped — add a new one instead, and bump
  * SETTINGS_VERSION in shared/defaults.ts alongside it.
- *
- * Currently empty: version 1 is the first released shape.
  */
-const migrations: Record<number, (data: Settings) => Settings> = {}
+const migrations: Record<number, (data: Settings) => Settings> = {
+  // v1 -> v2: added widget.collapsed (the widget can shrink to a "Today" pill).
+  1: (data) => ({
+    ...data,
+    version: 2,
+    widget: { ...data.widget, collapsed: false },
+  }),
+}
 
 export function migrateSettings(data: Settings): Settings {
   let current = data
