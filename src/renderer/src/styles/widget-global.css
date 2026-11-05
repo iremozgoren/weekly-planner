@@ -1,0 +1,24 @@
+@import './tokens.css';
+
+/* The widget window itself is transparent (set at the BrowserWindow level) —
+   this just makes sure nothing here paints an opaque background over it. */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: transparent;
+}
+
+body {
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  user-select: none;
+}
+
+#root {
+  height: 100%;
+}

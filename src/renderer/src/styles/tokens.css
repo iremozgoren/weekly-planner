@@ -1,0 +1,26 @@
+/**
+ * Design tokens, shared by the main window and the widget window — both
+ * `global.css` and `widget-global.css` import this so every surface agrees
+ * on the same palette (see CLAUDE.md § Theming and styling).
+ */
+:root {
+  --color-bg: #faf9f7;
+  --color-surface: #ffffff;
+  --color-border: #e5e1da;
+  --color-text: #1f2328;
+  --color-text-muted: #6b7280;
+  --color-accent: #8fb6ff;
+  --color-danger: #e0668a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1c1d21;
+    --color-surface: #25262b;
+    --color-border: #34363c;
+    --color-text: #e8e9ec;
+    --color-text-muted: #9aa0a8;
+    --color-accent: #7aa2f7;
+    --color-danger: #e68ba6;
+  }
+}

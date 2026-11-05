@@ -32,6 +32,8 @@ const en = {
   'task.dayLabel': 'Day',
   'task.colorLabel': 'Color',
   'task.markDone': 'Mark done',
+
+  'widget.title': 'Today',
 }
 
 export type Translations = typeof en
