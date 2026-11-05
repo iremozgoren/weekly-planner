@@ -1,0 +1,43 @@
+.task-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.task-editor__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.task-editor__field input[type='text'],
+.task-editor__field input[type='date'],
+.task-editor__field textarea {
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.task-editor__field input:focus,
+.task-editor__field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.task-editor__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.task-editor__actions-right {
+  display: flex;
+  gap: 8px;
+}

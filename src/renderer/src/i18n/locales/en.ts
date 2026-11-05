@@ -12,10 +12,26 @@ const en = {
   'common.appName': 'Weekly Planner',
   'common.today': 'Today',
   'common.loading': 'Loading…',
+  'common.close': 'Close',
+  'common.cancel': 'Cancel',
+  'common.save': 'Save',
+  'common.delete': 'Delete',
+  'common.none': 'None',
 
   'week.previousWeek': 'Previous week',
   'week.nextWeek': 'Next week',
   'week.noTasks': 'No tasks',
+  'week.addTask': 'Add task',
+
+  'task.newTask': 'New task',
+  'task.editTask': 'Edit task',
+  'task.titleLabel': 'Title',
+  'task.titlePlaceholder': 'What do you need to do?',
+  'task.notesLabel': 'Notes',
+  'task.notesPlaceholder': 'Notes (optional)',
+  'task.dayLabel': 'Day',
+  'task.colorLabel': 'Color',
+  'task.markDone': 'Mark done',
 }
 
 export type Translations = typeof en

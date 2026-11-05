@@ -55,3 +55,7 @@
   font-size: 0.8rem;
   margin: 0;
 }
+
+.day-column__footer {
+  padding: 0 10px 10px;
+}

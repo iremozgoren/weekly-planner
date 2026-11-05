@@ -5,6 +5,7 @@
   --color-text: #1f2328;
   --color-text-muted: #6b7280;
   --color-accent: #8fb6ff;
+  --color-danger: #e0668a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,6 +16,7 @@
     --color-text: #e8e9ec;
     --color-text-muted: #9aa0a8;
     --color-accent: #7aa2f7;
+    --color-danger: #e68ba6;
   }
 }
 
