@@ -1,6 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import type { Task } from '@shared/types'
+import { minutesToTimeLabel } from '@shared/time'
 import { useTaskSwatch } from '../../hooks/useTaskSwatch'
 import { Checkbox } from '../../components/ui/Checkbox'
 import { useTranslation } from '../../i18n/useTranslation'
@@ -40,6 +41,9 @@ export function TaskCard({ task, onEdit }: TaskCardProps) {
         aria-label={t('task.markDone')}
       />
       <button type="button" className="task-card__title-button" onClick={onEdit}>
+        {task.schedule && (
+          <span className="task-card__time">{minutesToTimeLabel(task.schedule.startMinutes)}</span>
+        )}
         <span
           className={task.done ? 'task-card__title task-card__title--done' : 'task-card__title'}
         >

@@ -1,4 +1,4 @@
-import { promises as fs, existsSync, renameSync } from 'node:fs'
+import { promises as fs, existsSync, renameSync, copyFileSync } from 'node:fs'
 
 /**
  * Reads and parses a JSON file. Returns `null` if the file doesn't exist yet
@@ -37,4 +37,15 @@ export async function writeJsonFileAtomic(filePath: string, data: unknown): Prom
 export function backupCorruptFile(filePath: string): void {
   if (!existsSync(filePath)) return
   renameSync(filePath, `${filePath}.corrupt-${Date.now()}`)
+}
+
+/**
+ * Copies (not moves) a file aside before a version migration runs, so the
+ * pre-migration shape is always recoverable even though the file itself is
+ * perfectly valid — unlike `backupCorruptFile`, this doesn't remove the
+ * original; the migrated data overwrites it normally on the next write.
+ */
+export function backupBeforeMigration(filePath: string, fromVersion: number): void {
+  if (!existsSync(filePath)) return
+  copyFileSync(filePath, `${filePath}.v${fromVersion}-backup-${Date.now()}`)
 }

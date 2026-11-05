@@ -26,9 +26,10 @@ type EditorState = { mode: 'create'; dayKey: string } | { mode: 'edit'; task: Ta
 
 type WeekGridProps = {
   weekDays: Date[]
+  onSelectDay: (date: Date) => void
 }
 
-export function WeekGrid({ weekDays }: WeekGridProps) {
+export function WeekGrid({ weekDays, onSelectDay }: WeekGridProps) {
   const tasks = useTasksStore((state) => state.tasks)
   const [editorState, setEditorState] = useState<EditorState>(null)
   const [activeTaskId, setActiveTaskId] = useState<string | null>(null)
@@ -111,6 +112,7 @@ export function WeekGrid({ weekDays }: WeekGridProps) {
                 isToday={dayKey === today}
                 onAddTask={(day) => setEditorState({ mode: 'create', dayKey: day })}
                 onEditTask={(task) => setEditorState({ mode: 'edit', task })}
+                onSelectDay={onSelectDay}
               />
             )
           })}

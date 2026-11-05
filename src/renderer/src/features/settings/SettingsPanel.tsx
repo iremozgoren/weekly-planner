@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react'
 import type { Locale } from '@shared/locales'
 import { Checkbox } from '../../components/ui/Checkbox'
+import { SegmentedControl } from '../../components/ui/SegmentedControl'
 import { useTranslation } from '../../i18n/useTranslation'
 import './SettingsPanel.css'
 
 // Language names are shown as endonyms (each language's own name for
 // itself), not translated — a standard convention so a user can always
 // find their language regardless of the UI's current locale.
-const LANGUAGE_LABELS: Record<Locale, string> = { en: 'English', tr: 'Türkçe' }
-const LANGUAGES: Locale[] = ['en', 'tr']
+const LANGUAGE_OPTIONS: { value: Locale; label: string }[] = [
+  { value: 'en', label: 'English' },
+  { value: 'tr', label: 'Türkçe' },
+]
 
 export function SettingsPanel() {
   const { t, locale } = useTranslation()
@@ -37,25 +40,12 @@ export function SettingsPanel() {
         <div className="settings-panel__row-text">
           <span className="settings-panel__row-label">{t('settings.language')}</span>
         </div>
-        <div
-          className="settings-panel__segmented"
-          role="radiogroup"
+        <SegmentedControl
+          value={locale}
+          options={LANGUAGE_OPTIONS}
+          onChange={(value) => void window.api.settings.update({ locale: value })}
           aria-label={t('settings.language')}
-        >
-          {LANGUAGES.map((option) => (
-            <button
-              key={option}
-              type="button"
-              role="radio"
-              aria-checked={locale === option}
-              className="settings-panel__segment"
-              data-active={locale === option || undefined}
-              onClick={() => void window.api.settings.update({ locale: option })}
-            >
-              {LANGUAGE_LABELS[option]}
-            </button>
-          ))}
-        </div>
+        />
       </div>
 
       <div className="settings-panel__row">

@@ -5,10 +5,15 @@ import { PLANNER_VERSION } from '@shared/defaults'
  * One entry per released version, upgrading FROM that version TO the next.
  * Never edit a case once it has shipped — add a new one instead, and bump
  * PLANNER_VERSION in shared/defaults.ts alongside it.
- *
- * Currently empty: version 1 is the first released shape.
  */
-const migrations: Record<number, (data: PlannerData) => PlannerData> = {}
+const migrations: Record<number, (data: PlannerData) => PlannerData> = {
+  // v1 -> v2: added Task.schedule (hourly planning). Existing tasks stay
+  // untimed (schedule: null) — nothing about them changes otherwise.
+  1: (data) => ({
+    version: 2,
+    tasks: data.tasks.map((task) => ({ ...task, schedule: null })),
+  }),
+}
 
 export function migratePlannerData(data: PlannerData): PlannerData {
   let current = data

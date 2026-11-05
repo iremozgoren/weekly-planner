@@ -1,6 +1,15 @@
 import type { LabelColor } from './labels'
 import type { Locale } from './locales'
 
+/**
+ * `startMinutes`/`durationMinutes` are minutes since midnight — comparing
+ * or sorting timed tasks is plain number comparison, no time parsing
+ * anywhere a task is read. A discriminated null-or-both shape (rather than
+ * two separately-nullable fields) makes "has a start time but no duration"
+ * unrepresentable instead of merely discouraged.
+ */
+export type TaskSchedule = { startMinutes: number; durationMinutes: number } | null
+
 /** A single task, keyed by the ISO day it belongs to (see CLAUDE.md § Task model). */
 export type Task = {
   id: string
@@ -12,6 +21,8 @@ export type Task = {
   color: LabelColor | null
   /** Float position within its day; a drop between two cards is a midpoint, not a reindex. */
   order: number
+  /** null = untimed, stays in the day's plain list. Non-null = placed on the hourly timeline. */
+  schedule: TaskSchedule
   createdAt: string
   updatedAt: string
 }
@@ -27,6 +38,7 @@ export type CreateTaskInput = {
   dayKey: string
   notes?: string | null
   color?: LabelColor | null
+  schedule?: TaskSchedule
 }
 
 export type TaskPatch = Partial<Omit<Task, 'id' | 'createdAt' | 'updatedAt'>>

@@ -26,11 +26,29 @@
   background: var(--color-glass-border);
 }
 
+/* The current/next timed task gets a left accent so it reads at a glance,
+   using the same "today" amber semantic as the main window and the ring. */
+.today-row[data-highlight] {
+  background: var(--color-glass-border);
+  box-shadow: inset 2px 0 0 var(--color-today-text);
+}
+
 .today-row__dot {
   width: 8px;
   height: 8px;
   border-radius: var(--radius-full);
   flex-shrink: 0;
+}
+
+.today-row__time {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.today-row[data-highlight] .today-row__time {
+  color: var(--color-today-text);
 }
 
 .today-row__title {
@@ -39,7 +57,20 @@
   word-break: break-word;
 }
 
+.today-row[data-highlight] .today-row__title {
+  font-weight: 600;
+}
+
 .today-row__title--done {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+.today-row__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

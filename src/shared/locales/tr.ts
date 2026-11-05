@@ -15,6 +15,13 @@ const tr: Translations = {
   'week.nextWeek': 'Sonraki hafta',
   'week.addTask': 'Görev ekle',
 
+  'view.week': 'Hafta',
+  'view.day': 'Gün',
+
+  'day.previousDay': 'Önceki gün',
+  'day.nextDay': 'Sonraki gün',
+  'day.unscheduled': 'Zamanlanmamış',
+
   'task.newTask': 'Yeni görev',
   'task.editTask': 'Görevi düzenle',
   'task.titleLabel': 'Başlık',
@@ -24,6 +31,10 @@ const tr: Translations = {
   'task.dayLabel': 'Gün',
   'task.colorLabel': 'Renk',
   'task.markDone': 'Tamamlandı olarak işaretle',
+  'task.startTimeLabel': 'Başlangıç saati',
+  'task.durationLabel': 'Süre (dakika)',
+  'task.happeningNow': 'Şu an gerçekleşiyor',
+  'task.upNext': 'Sırada',
 
   'widget.title': 'Bugün',
   'widget.empty': 'Bugün için planlanan bir şey yok.',

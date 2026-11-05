@@ -1,6 +1,6 @@
 import type { PlannerData, Settings } from './types'
 
-export const PLANNER_VERSION = 1
+export const PLANNER_VERSION = 2
 export const SETTINGS_VERSION = 2
 
 export function createDefaultPlannerData(): PlannerData {

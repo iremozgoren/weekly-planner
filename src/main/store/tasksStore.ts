@@ -2,8 +2,13 @@ import { randomUUID } from 'node:crypto'
 import { join } from 'node:path'
 import { app } from 'electron'
 import type { CreateTaskInput, PlannerData, Task, UpdateTaskInput } from '@shared/types'
-import { createDefaultPlannerData } from '@shared/defaults'
-import { backupCorruptFile, readJsonFile, writeJsonFileAtomic } from './jsonFile'
+import { createDefaultPlannerData, PLANNER_VERSION } from '@shared/defaults'
+import {
+  backupBeforeMigration,
+  backupCorruptFile,
+  readJsonFile,
+  writeJsonFileAtomic,
+} from './jsonFile'
 import { createDebouncedWriter } from './debouncedWriter'
 import { migratePlannerData } from './migrations/planner'
 
@@ -32,6 +37,9 @@ export async function initTasksStore(): Promise<void> {
     if (raw === null) {
       state = createDefaultPlannerData()
     } else if (isPlannerDataShape(raw)) {
+      if (raw.version < PLANNER_VERSION) {
+        backupBeforeMigration(filePath, raw.version)
+      }
       state = migratePlannerData(raw)
     } else {
       throw new Error('planner.json has an unexpected shape')
@@ -73,6 +81,7 @@ export function createTask(input: CreateTaskInput): Task {
     done: false,
     color: input.color ?? null,
     order,
+    schedule: input.schedule ?? null,
     createdAt: now,
     updatedAt: now,
   }

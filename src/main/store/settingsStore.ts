@@ -1,8 +1,13 @@
 import { join } from 'node:path'
 import { app } from 'electron'
 import type { Settings, SettingsPatch } from '@shared/types'
-import { createDefaultSettings } from '@shared/defaults'
-import { backupCorruptFile, readJsonFile, writeJsonFileAtomic } from './jsonFile'
+import { createDefaultSettings, SETTINGS_VERSION } from '@shared/defaults'
+import {
+  backupBeforeMigration,
+  backupCorruptFile,
+  readJsonFile,
+  writeJsonFileAtomic,
+} from './jsonFile'
 import { createDebouncedWriter } from './debouncedWriter'
 import { migrateSettings } from './migrations/settings'
 
@@ -31,6 +36,9 @@ export async function initSettingsStore(): Promise<void> {
     if (raw === null) {
       state = createDefaultSettings()
     } else if (isSettingsShape(raw)) {
+      if (raw.version < SETTINGS_VERSION) {
+        backupBeforeMigration(filePath, raw.version)
+      }
       state = migrateSettings(raw)
     } else {
       throw new Error('settings.json has an unexpected shape')

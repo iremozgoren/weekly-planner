@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { todayKey } from '@shared/date'
+import { nowMinutes } from '@shared/time'
 import { useTasksStore } from '../store/tasksStore'
 import { useSettingsStore } from '../store/settingsStore'
 import { useTranslation } from '../i18n/useTranslation'
@@ -20,12 +21,38 @@ export function WidgetApp() {
     void initSettings()
   }, [initTasks, initSettings])
 
+  // Timed tasks lead the list in chronological order; untimed ones follow
+  // in their existing order — so "what's next" is always visible first.
   const todayTasks = useMemo(() => {
     const key = todayKey()
-    return tasks.filter((task) => task.dayKey === key).sort((a, b) => a.order - b.order)
+    return tasks
+      .filter((task) => task.dayKey === key)
+      .sort((a, b) => {
+        const startA = a.schedule?.startMinutes ?? Infinity
+        const startB = b.schedule?.startMinutes ?? Infinity
+        return startA - startB || a.order - b.order
+      })
   }, [tasks])
 
   const doneCount = todayTasks.filter((task) => task.done).length
+
+  // The one task to call out: whichever timed, not-done task is happening
+  // right now, or failing that, the next one coming up.
+  const highlightedTaskId = useMemo(() => {
+    const now = nowMinutes()
+    const timed = todayTasks.filter((task) => task.schedule !== null && !task.done)
+    const current = timed.find((task) => {
+      const schedule = task.schedule
+      return (
+        schedule &&
+        now >= schedule.startMinutes &&
+        now < schedule.startMinutes + schedule.durationMinutes
+      )
+    })
+    if (current) return current.id
+    const next = timed.find((task) => (task.schedule?.startMinutes ?? -1) > now)
+    return next?.id ?? null
+  }, [todayTasks])
 
   function setCollapsed(collapsed: boolean): void {
     void window.api.settings.update({ widget: { ...widgetSettings, collapsed } })
@@ -60,7 +87,7 @@ export function WidgetApp() {
         </div>
       </div>
       <div className="widget-app__body">
-        <TodayList tasks={todayTasks} />
+        <TodayList tasks={todayTasks} highlightedTaskId={highlightedTaskId} />
       </div>
     </div>
   )

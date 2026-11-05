@@ -53,6 +53,13 @@ body {
   min-width: 0;
 }
 
+.app-shell__header-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
 .app-shell__loading {
   color: var(--color-text-muted);
   padding: var(--space-5);

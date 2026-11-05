@@ -14,6 +14,8 @@
 
 .task-editor__field input[type='text'],
 .task-editor__field input[type='date'],
+.task-editor__field input[type='time'],
+.task-editor__field input[type='number'],
 .task-editor__field textarea {
   font: inherit;
   color: var(--color-text);
@@ -29,6 +31,20 @@
 .task-editor__field textarea:focus {
   outline: none;
   border-color: var(--color-accent);
+}
+
+.task-editor__field input:disabled {
+  opacity: 0.5;
+}
+
+.task-editor__field-row {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.task-editor__field-row .task-editor__field {
+  flex: 1;
+  min-width: 0;
 }
 
 .task-editor__actions {

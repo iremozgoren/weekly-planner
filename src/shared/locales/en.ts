@@ -26,6 +26,13 @@ const en = {
   'week.nextWeek': 'Next week',
   'week.addTask': 'Add task',
 
+  'view.week': 'Week',
+  'view.day': 'Day',
+
+  'day.previousDay': 'Previous day',
+  'day.nextDay': 'Next day',
+  'day.unscheduled': 'Unscheduled',
+
   'task.newTask': 'New task',
   'task.editTask': 'Edit task',
   'task.titleLabel': 'Title',
@@ -35,6 +42,10 @@ const en = {
   'task.dayLabel': 'Day',
   'task.colorLabel': 'Color',
   'task.markDone': 'Mark done',
+  'task.startTimeLabel': 'Start time',
+  'task.durationLabel': 'Duration (minutes)',
+  'task.happeningNow': 'Happening now',
+  'task.upNext': 'Up next',
 
   'widget.title': 'Today',
   'widget.empty': 'Nothing planned for today.',

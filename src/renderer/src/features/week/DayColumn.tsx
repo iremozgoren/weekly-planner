@@ -13,12 +13,20 @@ type DayColumnProps = {
   isToday: boolean
   onAddTask: (dayKey: string) => void
   onEditTask: (task: Task) => void
+  onSelectDay: (date: Date) => void
 }
 
 /** The droppable id prefix for a day column, as opposed to a specific task card's id. */
 export const DAY_DROPPABLE_PREFIX = 'day:'
 
-export function DayColumn({ date, tasks, isToday, onAddTask, onEditTask }: DayColumnProps) {
+export function DayColumn({
+  date,
+  tasks,
+  isToday,
+  onAddTask,
+  onEditTask,
+  onSelectDay,
+}: DayColumnProps) {
   const { t, dateLocale } = useTranslation()
   const dayKey = toDayKey(date)
   const sortedTasks = [...tasks].sort((a, b) => a.order - b.order)
@@ -27,10 +35,10 @@ export function DayColumn({ date, tasks, isToday, onAddTask, onEditTask }: DayCo
 
   return (
     <div className="day-column" data-today={isToday || undefined} data-day-key={dayKey}>
-      <div className="day-column__header">
+      <button type="button" className="day-column__header" onClick={() => onSelectDay(date)}>
         <span className="day-column__weekday">{format(date, 'EEE', { locale: dateLocale })}</span>
         <span className="day-column__date">{format(date, 'd', { locale: dateLocale })}</span>
-      </div>
+      </button>
       <SortableContext
         items={sortedTasks.map((task) => task.id)}
         strategy={verticalListSortingStrategy}

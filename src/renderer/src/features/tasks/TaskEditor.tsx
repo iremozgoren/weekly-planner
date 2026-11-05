@@ -1,6 +1,7 @@
 import { useRef, useState, type FormEvent } from 'react'
 import type { LabelColor } from '@shared/labels'
 import type { Task } from '@shared/types'
+import { DEFAULT_DURATION_MINUTES, minutesToTimeLabel, timeLabelToMinutes } from '@shared/time'
 import { Modal } from '../../components/ui/Modal'
 import { Button } from '../../components/ui/Button'
 import { useTranslation } from '../../i18n/useTranslation'
@@ -19,8 +20,20 @@ export function TaskEditor(props: TaskEditorProps) {
   const [color, setColor] = useState<LabelColor | null>(
     props.mode === 'edit' ? props.task.color : null,
   )
+  const existingSchedule = props.mode === 'edit' ? props.task.schedule : null
+  const [startTime, setStartTime] = useState(
+    existingSchedule ? minutesToTimeLabel(existingSchedule.startMinutes) : '',
+  )
+  const [duration, setDuration] = useState(
+    existingSchedule ? existingSchedule.durationMinutes : DEFAULT_DURATION_MINUTES,
+  )
   const [isSaving, setIsSaving] = useState(false)
   const titleInputRef = useRef<HTMLInputElement>(null)
+
+  // Clearing the start time field is how you unschedule a task — no
+  // separate toggle needed.
+  const startMinutes = timeLabelToMinutes(startTime)
+  const schedule = startMinutes === null ? null : { startMinutes, durationMinutes: duration }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault()
@@ -32,7 +45,7 @@ export function TaskEditor(props: TaskEditorProps) {
 
     setIsSaving(true)
     try {
-      const patch = { title: trimmedTitle, notes: notes.trim() || null, dayKey, color }
+      const patch = { title: trimmedTitle, notes: notes.trim() || null, dayKey, color, schedule }
       if (props.mode === 'edit') {
         await window.api.tasks.update({ id: props.task.id, patch })
       } else {
@@ -87,6 +100,28 @@ export function TaskEditor(props: TaskEditorProps) {
           <span>{t('task.dayLabel')}</span>
           <input type="date" value={dayKey} onChange={(event) => setDayKey(event.target.value)} />
         </label>
+
+        <div className="task-editor__field-row">
+          <label className="task-editor__field">
+            <span>{t('task.startTimeLabel')}</span>
+            <input
+              type="time"
+              value={startTime}
+              onChange={(event) => setStartTime(event.target.value)}
+            />
+          </label>
+          <label className="task-editor__field">
+            <span>{t('task.durationLabel')}</span>
+            <input
+              type="number"
+              min={5}
+              step={5}
+              value={duration}
+              disabled={startMinutes === null}
+              onChange={(event) => setDuration(Math.max(5, Number(event.target.value) || 5))}
+            />
+          </label>
+        </div>
 
         <div className="task-editor__field">
           <span>{t('task.colorLabel')}</span>
