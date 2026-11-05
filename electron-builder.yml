@@ -21,8 +21,7 @@ mac:
   target:
     - target: dmg
       arch:
-        - arm64
-        - x64
+        - universal
 
 dmg:
   title: '${productName} ${version}'
