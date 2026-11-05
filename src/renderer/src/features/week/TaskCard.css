@@ -7,6 +7,12 @@
   padding: 8px 10px;
   font-size: 0.85rem;
   line-height: 1.3;
+  touch-action: none;
+}
+
+.task-card--overlay {
+  box-shadow: 0 8px 20px rgb(0 0 0 / 20%);
+  cursor: grabbing;
 }
 
 .task-card__title-button {
