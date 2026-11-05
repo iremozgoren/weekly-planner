@@ -1,14 +1,19 @@
 .week-navigator {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
   padding: 16px 20px;
+}
+
+.week-navigator__nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .week-navigator__range {
   font-size: 1.1rem;
   font-weight: 600;
-  min-width: 220px;
 }
 
 .week-navigator__arrow {

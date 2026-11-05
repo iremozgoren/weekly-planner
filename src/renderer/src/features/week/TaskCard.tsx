@@ -1,5 +1,6 @@
 import { LABEL_SWATCHES } from '@shared/labels'
 import type { Task } from '@shared/types'
+import { useIsDarkMode } from '../../hooks/useIsDarkMode'
 import './TaskCard.css'
 
 type TaskCardProps = {
@@ -7,9 +8,8 @@ type TaskCardProps = {
 }
 
 export function TaskCard({ task }: TaskCardProps) {
-  // Only the light swatch is used for now — proper light/dark swatch
-  // switching lands with the theme system (step 6).
-  const swatch = task.color ? LABEL_SWATCHES.light[task.color] : null
+  const isDark = useIsDarkMode()
+  const swatch = task.color ? LABEL_SWATCHES[isDark ? 'dark' : 'light'][task.color] : null
 
   return (
     <div

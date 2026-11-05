@@ -25,23 +25,25 @@ export function WeekNavigator({
 
   return (
     <div className="week-navigator">
-      <button
-        type="button"
-        className="week-navigator__arrow"
-        onClick={onPrevious}
-        aria-label={t('week.previousWeek')}
-      >
-        ‹
-      </button>
-      <span className="week-navigator__range">{rangeLabel}</span>
-      <button
-        type="button"
-        className="week-navigator__arrow"
-        onClick={onNext}
-        aria-label={t('week.nextWeek')}
-      >
-        ›
-      </button>
+      <div className="week-navigator__nav">
+        <button
+          type="button"
+          className="week-navigator__arrow"
+          onClick={onPrevious}
+          aria-label={t('week.previousWeek')}
+        >
+          ‹
+        </button>
+        <span className="week-navigator__range">{rangeLabel}</span>
+        <button
+          type="button"
+          className="week-navigator__arrow"
+          onClick={onNext}
+          aria-label={t('week.nextWeek')}
+        >
+          ›
+        </button>
+      </div>
       <button type="button" className="week-navigator__today" onClick={onToday}>
         {t('common.today')}
       </button>
